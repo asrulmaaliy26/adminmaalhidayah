@@ -36,7 +36,7 @@ class HomepageController extends Controller
 
     public function getOneArticle($slug)
     {
-        $article = Article::where(['article_slug' => $slug, 'article_status' => 1])
+        $article = Article::where(['article_id' => $slug, 'article_status' => 1])
                         ->first(); // Menghapus orderBy karena tidak diperlukan
 
         if (!$article) {
