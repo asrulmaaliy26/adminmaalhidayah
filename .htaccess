@@ -1,0 +1,9 @@
+# .htaccess di dalam public_html
+
+# Arahkan semua permintaan ke folder 'public'
+RewriteEngine On
+RewriteBase /
+
+# Arahkan semua permintaan ke folder 'public'
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L]
