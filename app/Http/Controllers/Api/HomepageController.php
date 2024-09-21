@@ -68,6 +68,18 @@ class HomepageController extends Controller
         return response()->json($categories);
     }
 
+    public function getOneJenis($id)
+    {
+        $jenis = Jenis::where(['jenis_id' => $id, 'jenis_status' => 1])
+                        ->first(); // Menghapus orderBy karena tidak diperlukan
+
+        if (!$jenis) {
+            return response()->json(['error' => 'jenis not found'], 403);
+        }
+
+        return response()->json($jenis);
+    }
+
     public function getJenis()
     {
         $jenises = Jenis::where('jenis_status', 1)->get();
@@ -75,11 +87,35 @@ class HomepageController extends Controller
         return response()->json($jenises);
     }
 
+    public function getOnePendidikan($id)
+    {
+        $pendidikan = Pendidikan::where(['pendidikan_id' => $id, 'pendidikan_status' => 1])
+                        ->first(); // Menghapus orderBy karena tidak diperlukan
+
+        if (!$pendidikan) {
+            return response()->json(['error' => 'pendidikan not found'], 403);
+        }
+
+        return response()->json($pendidikan);
+    }
+
     public function getPendidikan()
     {
         $pendidikans = Pendidikan::where('pendidikan_status', 1)->get();
 
         return response()->json($pendidikans);
+    }
+
+    public function getOneTingkat($id)
+    {
+        $tingkat = Tingkat::where(['tingkat_id' => $id, 'tingkat_status' => 1])
+                        ->first(); // Menghapus orderBy karena tidak diperlukan
+
+        if (!$tingkat) {
+            return response()->json(['error' => 'tingkat not found'], 403);
+        }
+
+        return response()->json($tingkat);
     }
 
     public function getTingkat()
