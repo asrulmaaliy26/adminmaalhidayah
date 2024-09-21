@@ -23,9 +23,13 @@ Route::get('/articles/{total}/paginasi', [HomepageController::class, 'getArticle
 Route::get('/article/{slug}', [HomepageController::class, 'getOneArticle']);
 
 Route::get('/categories', [HomepageController::class, 'getCategory']);
+Route::get('/categories/{id}', [HomepageController::class, 'getOneCategory']);
 Route::get('/jenises', [HomepageController::class, 'getJenis']);
+Route::get('/jenises/{id}', [HomepageController::class, 'getOneJenis']);
 Route::get('/pendidikans', [HomepageController::class, 'getPendidikan']);
+Route::get('/pendidikans/{id}', [HomepageController::class, 'getOnePendidikan']);
 Route::get('/tingkats', [HomepageController::class, 'getTingkat']);
+Route::get('/tingkats/{id}', [HomepageController::class, 'getOneTingkat']);
 
 // Route untuk mendapatkan artikel berdasarkan 2 tipe tertentu
 Route::get('/articles/{type}/{typeSlug}', [HomepageController::class, 'getArticleByOneTypes']);

@@ -49,6 +49,18 @@ class HomepageController extends Controller
     }
 
 
+    public function getOneCategory($id)
+    {
+        $category = Category::where(['category_id' => $id, 'category_status' => 1])
+                        ->first(); // Menghapus orderBy karena tidak diperlukan
+
+        if (!$category) {
+            return response()->json(['error' => 'category not found'], 403);
+        }
+
+        return response()->json($category);
+    }
+
     public function getCategory()
     {
         $categories = Category::where('category_status', 1)->get();
