@@ -15,9 +15,18 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()){
-            return redirect()->route('admin.dashboard')->with('status','You are already login.');
+        // Cek apakah pengguna sudah login
+        if (Auth::check()) {
+            // Jika sudah login, izinkan akses ke rute selanjutnya
+            return $next($request);
         }
-        return $next($request);
+
+        // Jika belum login, hanya izinkan akses ke rute login
+        if ($request->is('admin/login') || $request->is('admin/login/*')) {
+            return $next($request);
+        }
+
+        // Jika akses ke rute lain selain login, redirect ke halaman login
+        return redirect()->route('admin.login')->with('error', 'Please login first.');
     }
 }

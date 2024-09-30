@@ -37,6 +37,14 @@
                     </nav>
                 </div>
                 
+                <!----- contacts ------->
+                @role('Admin|Editor')
+                <a class="nav-link {{ Request::segment(2)=='contacts' ? 'active' : ''}}" href="{{route('admin.contact.index')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                    Contact
+                </a>
+                @endrole
+                
                 <!----- Categories ------->
                 @role('Admin|Editor')
                 <a class="nav-link {{ Request::segment(2)=='categories' ? 'active' : ''}}" href="{{route('admin.category.index')}}">

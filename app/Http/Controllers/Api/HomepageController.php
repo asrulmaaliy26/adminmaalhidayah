@@ -200,8 +200,12 @@ class HomepageController extends Controller
 
     public function getContact()
     {
+        $contacts = Contact::all();
+
+        // Kembalikan data dalam bentuk JSON
         return response()->json([
-            'status' => 'You can send a message to us through POST /api/contact',
+            'status' => 'success',
+            'contacts' => $contacts
         ]);
     }
 
@@ -221,20 +225,6 @@ class HomepageController extends Controller
         $contact->message = $request->message;
         $contact->save();
 
-        $fromAddress = config('mail.from.address');
-        $fromName = config('app.custom_site_title');
-
-        Mail::send([], [], function ($msg) use ($request, $fromAddress, $fromName) {
-            $msg->from($fromAddress, $fromName)
-                ->to($request->email)
-                ->subject('Your ' . $request->subject . ' message reached us!')
-                ->html('Dear ' . Str::title($request->name) . ', <br><br>'
-                    . 'Your message:<br><br> "' . $request->message . '"<br><br>'
-                    . 'Successfully reached us! <br><br>'
-                    . 'We will return as soon as possible.<br><br>'
-                    . '<small>' . now() . '</small>');
-        });
-
-        return response()->json(['status' => 'Your message was successfully sent.']);
+        return response()->json($request->all());
     }
 }
