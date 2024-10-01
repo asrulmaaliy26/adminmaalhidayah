@@ -96,6 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             Route::middleware('role:Admin')->group(function () {
                 Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index');
+                Route::delete('/contacts/{contact_id}', [ContactController::class, 'deleteContact'])->name('contacts.delete');
             });
 
             //------- User Routes -------

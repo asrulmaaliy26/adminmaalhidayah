@@ -3,11 +3,15 @@
 @section('content')
 
 
-@if(session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-@endif
+@if (session('status'))
+        <div class="row">{{-- Alert --}}
+            <div class="col-12 text-center">
+                <div class="alert alert-success mt-4">
+                    {{ session('status') }}
+                </div>
+            </div>
+        </div>
+    @endif
 
 @if(session('error'))
     <div class="alert alert-danger">
@@ -47,10 +51,23 @@
                     <td>{{$contact->message}}</td>
                     <td>{{$contact->created_at}}</td>
                     <td>
-                        <a href="{{route('admin.contact.index',$contact->contact_id)}}" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-pen px-1"></i></a>
-                        {{-- <a href="{{route('admin.contact.deleteContact', $contact->contact_id) }}" title="Delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this contact?');">
-                            <i class="fa fa-trash px-1"></i>
-                        </a> --}}
+                        <div class="d-flex justify-content-around">
+                            <!-- Tombol Edit di Kiri -->
+                            <a href="{{ route('admin.contact.index', $contact->contact_id) }}" title="Edit"
+                                class="btn btn-sm btn-primary">
+                                <i class="fa fa-pen px-1"></i>
+                            </a>
+
+                            <!-- Tombol Delete di Kanan -->
+                            <form action="{{ route('admin.contacts.delete', $contact->contact_id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this contact?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-trash px-1"></i>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
