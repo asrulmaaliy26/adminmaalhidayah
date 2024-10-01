@@ -94,7 +94,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('config', [ConfigController::class, 'configPost'])->name('config.configPost');
             });
 
-            Route::middleware('role:Admin')->group(function () {
+            Route::middleware('role:Admin|Editor')->group(function () {
                 Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index');
                 Route::delete('/contacts/{contact_id}', [ContactController::class, 'deleteContact'])->name('contacts.delete');
             });
