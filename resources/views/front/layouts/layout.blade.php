@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>@yield('title',empty(config('app.custom_site_title')) ? 'Burak\'s Blog': config('app.custom_site_title'))</title>
+        <title>@yield('title',empty(config('app.custom_site_title')) ? 'Al Hidayah\'s Blog': config('app.custom_site_title'))</title>
         <link rel="icon" type="image/x-icon" href="{{empty(config('app.custom_site_favicon')) ? 'https://placehold.co/32': asset(config('app.custom_site_favicon'))}}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
