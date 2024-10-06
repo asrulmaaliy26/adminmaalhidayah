@@ -26,6 +26,7 @@
                     <tr>
                         <th>Name</th>
                         <th>email</th>
+                        <th>pendidikan</th>
                         <th>subject</th>
                         <th>message</th>
                         <th>Create Date</th>
@@ -36,6 +37,7 @@
                     <tr>
                         <th>Name</th>
                         <th>email</th>
+                        <th>pendidikan</th>
                         <th>subject</th>
                         <th>message</th>
                         <th>Create Date</th>
@@ -47,6 +49,7 @@
                         <tr>
                             <td>{{ $contact->name }}</td>
                             <td>{{ $contact->email }}</td>
+                            <td>{{ $contact->pendidikan }}</td>
                             <td>{{ $contact->subject }}</td>
                             <td>{{ $contact->message }}</td>
                             <td>{{ $contact->created_at }}</td>

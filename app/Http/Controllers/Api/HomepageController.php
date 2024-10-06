@@ -221,6 +221,7 @@ class HomepageController extends Controller
         $contact = new Contact();
         $contact->name = $request->name;
         $contact->email = $request->email;
+        $contact->pendidikan = $request->pendidikan;
         $contact->subject = $request->subject;
         $contact->message = $request->message;
         $contact->save();
