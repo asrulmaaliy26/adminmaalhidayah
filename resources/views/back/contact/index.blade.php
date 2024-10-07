@@ -51,7 +51,7 @@
                             <td>{{ $contact->email }}</td>
                             <td>{{ $contact->pendidikan }}</td>
                             <td>{{ $contact->subject }}</td>
-                            <td>{{ $contact->message }}</td>
+                            <td>{!! nl2br(e($contact->message)) !!}</td>
                             <td>{{ $contact->created_at }}</td>
                             <td>
                                 <div class="d-flex justify-content-around">
@@ -80,16 +80,19 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="replyModalLabel{{ $contact->contact_id }}">Balas Pesan ke
+                                        <h5 class="modal-title" id="replyModalLabel{{ $contact->contact_id }}">Balas Pesan
+                                            ke
                                             {{ $contact->email }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('admin.contacts.reply', $contact->contact_id) }}" method="POST">
+                                        <form action="{{ route('admin.contacts.reply', $contact->contact_id) }}"
+                                            method="POST">
                                             @csrf
                                             <div class="mb-3">
-                                                <label for="replyMessage{{ $contact->contact_id }}" class="form-label">Balas
+                                                <label for="replyMessage{{ $contact->contact_id }}"
+                                                    class="form-label">Balas
                                                     Pesan</label>
                                                 <textarea class="form-control" id="replyMessage{{ $contact->contact_id }}" name="replyMessage" rows="3" required></textarea>
                                             </div>

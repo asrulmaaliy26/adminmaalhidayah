@@ -40,6 +40,7 @@ class ContactController extends Controller
 
     public function reply(Request $request, $id)
     {
+        // Mencari pesan berdasarkan ID
         $message = Contact::findOrFail($id);
 
         // Validasi input balasan
@@ -47,9 +48,25 @@ class ContactController extends Controller
             'replyMessage' => 'required',
         ]);
 
-        // Mengirim email ke pengirim pesan
+        // Mengirim email balasan ke pengirim pesan
         Mail::to($message->email)->send(new ReplyMessage($message, $request->replyMessage));
 
+        // Menghapus semua balasan lama dari pesan
+        $originalMessage = preg_replace('/\n*\s*--- Balasan:.*/s', '', $message->message);
+
+        // Menambahkan balasan baru di bawah pesan asli tanpa duplikasi balasan lama
+        // Mengecek apakah pesan asli sudah diakhiri dengan baris baru
+        if (substr($originalMessage, -1) !== "\n") {
+            $originalMessage .= "\n";
+        }
+
+        // Menambahkan balasan baru setelah pesan asli
+        $message->message = $originalMessage . "\n--- Balasan:\n" . $request->replyMessage;
+
+        // Menyimpan perubahan pada message
+        $message->save();
+
+        // Redirect kembali dengan notifikasi berhasil
         return redirect()->back()->with('success', 'Balasan berhasil dikirim ke ' . $message->email);
     }
 }
