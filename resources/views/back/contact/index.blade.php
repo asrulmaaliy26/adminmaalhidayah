@@ -12,6 +12,13 @@
             </div>
         </div>
     @endif
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mb-2">
+            <a href="https://mail.google.com/mail/#sent" class="text-light" style="text-decoration: none;" target="_blank">Gmail</a>
+        </button>
+    </div>
+    
+    
 
     @if (session('error'))
         <div class="alert alert-danger">
