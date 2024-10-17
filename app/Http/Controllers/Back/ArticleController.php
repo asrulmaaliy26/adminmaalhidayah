@@ -95,6 +95,11 @@ class ArticleController extends Controller
             }
             
         }
+        
+        if ($request->has('created_at')) {
+            $data['created_at'] = $request->created_at; // Update created_at jika ada di request
+        }
+
         $article = Article::where('article_id', $id)->update($data);
 
         return $this->handleRedirect($article, 'updated', 'admin.articles.edit', $id);

@@ -95,6 +95,12 @@
                 <input type="hidden" name="content" id="content">
                 @error('content') <div class="text-small text-danger">{{$message}}</div> @enderror
             </div>
+            <div class="mb-3">
+                <label for="created_at" class="form-label">Created At</label>
+                <input type="datetime-local" name="created_at" class="form-control" 
+                       value="{{ \Carbon\Carbon::parse($article->created_at)->format('Y-m-d\TH:i') }}" required>
+                @error('created_at') <div class="text-small text-danger">{{$message}}</div> @enderror
+            </div>            
             <div class="mb-3 form-check">
                 <input type="checkbox" {{$article->article_status == 1 ? 'checked' : ''}} name="status" id="" class="form-check-input">
                 <label class="form-check-label">Set as Active?</label>
