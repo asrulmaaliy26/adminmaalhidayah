@@ -156,8 +156,8 @@
             
             // Atur ukuran gambar menjadi 100x100
             if (image) {
-                image.style.width = '100px';
-                image.style.height = '100px';
+                image.style.height = '700px';
+                image.style.width = 'auto';
             }
         }
     }
