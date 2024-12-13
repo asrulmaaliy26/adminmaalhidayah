@@ -105,8 +105,30 @@
     
     const quill = new Quill('#editor', {
         theme: 'snow',
-        'height': '500'
+        modules: {
+            toolbar: {
+                container: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'link'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                ],
+                handlers: {
+                    image: imageHandler
+                }
+            }
+        }
     });
+
+    // Custom Image Handler
+    function imageHandler() {
+        const url = prompt('Enter the image URL');
+        if (url) {
+            // Masukkan gambar ke dalam konten editor
+            const range = quill.getSelection();
+            quill.insertEmbed(range.index, 'image', url);
+        }
+    }
 
     // Form submit edildiğinde, Quill editöründeki HTML içeriğini gizli bir input alanına ekleyin
     var form = document.querySelector('form');
