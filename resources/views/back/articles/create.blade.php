@@ -106,17 +106,18 @@
     const quill = new Quill('#editor', {
         theme: 'snow',
         modules: {
-            toolbar: {
-                container: [
-                    [{ header: [1, 2, false] }],
-                    ['bold', 'italic', 'underline'],
-                    ['image', 'link'],
-                    [{ list: 'ordered' }, { list: 'bullet' }],
-                ],
-                handlers: {
-                    image: imageHandler
-                }
-            }
+            toolbar: [
+                [{ 'header': [1, 2, false] }],
+                [{ 'font': [] }],
+                [{ 'size': ['small', 'medium', 'large', 'huge'] }],
+                [{ 'align': [] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'image', 'blockquote', 'code-block'],
+                [{ 'direction': 'rtl' }],
+                ['link'],
+                ['undo', 'redo']  // Optional undo/redo buttons
+            ]
         }
     });
 
@@ -124,17 +125,18 @@
     function imageHandler() {
         const url = prompt('Enter the image URL');
         if (url) {
-            // Masukkan gambar ke dalam konten editor
             const range = quill.getSelection();
             quill.insertEmbed(range.index, 'image', url);
-
-            // Ambil elemen gambar yang baru disisipkan
             const image = document.querySelector(`img[src="${url}"]`);
-            
-            // Atur ukuran gambar menjadi 100x100
             if (image) {
                 image.style.height = '700px';
                 image.style.width = 'auto';
+                image.style.display = 'block';
+                image.style.marginLeft = 'auto';
+                image.style.marginRight = 'auto';
+                // Optionally add margin for spacing
+                image.style.marginTop = '20px';
+                image.style.marginBottom = '20px';
             }
         }
     }
