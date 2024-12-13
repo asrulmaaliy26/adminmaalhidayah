@@ -150,8 +150,18 @@
             // Masukkan gambar ke dalam konten editor
             const range = quill.getSelection();
             quill.insertEmbed(range.index, 'image', url);
+
+            // Ambil elemen gambar yang baru disisipkan
+            const image = document.querySelector(`img[src="${url}"]`);
+            
+            // Atur ukuran gambar menjadi 100x100
+            if (image) {
+                image.style.width = '100px';
+                image.style.height = '100px';
+            }
         }
     }
+
 
     // Form submit edildiğinde, Quill editöründeki HTML içeriğini gizli bir input alanına ekleyin
     var form = document.querySelector('form');
