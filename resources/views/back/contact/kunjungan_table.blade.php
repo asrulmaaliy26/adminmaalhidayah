@@ -11,6 +11,7 @@
             <th>Jumlah Siswa</th>
             <th>Tanggal</th>
             <th>Keterangan</th>
+            <th>Status</th>
             <th>Create Date</th>
             <th>Options</th>
         </tr>
@@ -26,6 +27,7 @@
             <th>Jumlah Siswa</th>
             <th>Tanggal</th>
             <th>Keterangan</th>
+            <th>Status</th>
             <th>Create Date</th>
             <th>Options</th>
         </tr>
@@ -43,10 +45,15 @@
                 <td>{{ $contact->jumlahSiswa }}</td>
                 <td>{{ $contact->tanggal }}</td>
                 <td>{{ $contact->keterangan }}</td>
+                <td>{{ $contact->status }}</td>
                 <td>{{ $contact->created_at }}</td>
                 <td>
                     <div class="d-flex justify-content-around">
-                        <!-- Tombol Edit di Kiri -->
+                        <!-- Tombol Preview -->
+                        <button class="btn btn-success btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#previewKunjunganModal{{ $contact->contact_id }}">
+                            <i class="fa fa-eye px-1"></i>
+                        </button>
 
                         <button class="btn btn-secondary float-end" data-bs-toggle="modal"
                             data-bs-target="#replyKunjunganModal{{ $contact->contact_id }}"><i
@@ -64,6 +71,30 @@
                     </div>
                 </td>
             </tr>
+
+
+            <!-- Modal untuk preview message -->
+            <div class="modal fade" id="previewKunjunganModal{{ $contact->contact_id }}" tabindex="-1"
+                aria-labelledby="previewKunjunganModalLabel{{ $contact->contact_id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="previewKunjunganModalLabel{{ $contact->contact_id }}">
+                                Pesan dari {{ $contact->name }}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{!! nl2br(e($contact->keterangan)) !!}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Modal untuk balas -->
             <div class="modal fade" id="replyKunjunganModal{{ $contact->contact_id }}" tabindex="-1"

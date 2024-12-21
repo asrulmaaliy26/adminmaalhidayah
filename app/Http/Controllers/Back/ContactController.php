@@ -29,6 +29,7 @@ class ContactController extends Controller
             preg_match('/Jumlah Siswa:\s*(\d+)/', $contact->message, $jumlahSiswa);
             preg_match('/Tanggal:\s*(\d{4}-\d{2}-\d{2})/', $contact->message, $tanggal);
             preg_match('/Keterangan:\s*(.*)/', $contact->message, $keterangan);
+            preg_match('/--- Balasan:\s*(.*)/', $contact->message, $balasan);
 
             // Menyimpan data yang telah diproses dalam atribut sementara
             $contact->nomor = $nomor[1] ?? null;
@@ -36,6 +37,7 @@ class ContactController extends Controller
             $contact->jumlahSiswa = $jumlahSiswa[1] ?? null;
             $contact->tanggal = $tanggal[1] ?? null;
             $contact->keterangan = $keterangan[1] ?? null;
+            $contact->status = $balasan[1] ?? 'Tidak ada balasan';
         }
 
         return view('back.contact.index', compact('contacts', 'kunjungan'));

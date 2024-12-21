@@ -42,6 +42,7 @@
 
 @section('headScript')
     <style>
+        
         /* The switch - the box around the slider */
         .switch {
             position: relative;
