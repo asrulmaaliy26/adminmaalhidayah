@@ -103,21 +103,26 @@
     <!-- Initialize Quill editor -->
     <script>
     
+    // Initialize Quill Editor
     const quill = new Quill('#editor', {
         theme: 'snow',
         modules: {
-            toolbar: [
-                [{ 'header': [1, 2, false] }],
-                [{ 'font': [] }],
-                [{ 'size': ['small', 'medium', 'large', 'huge'] }],
-                [{ 'align': [] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['link', 'image', 'blockquote', 'code-block'],
-                [{ 'direction': 'rtl' }],
-                ['link'],
-                ['undo', 'redo']  // Optional undo/redo buttons
-            ]
+            toolbar: {
+                container: [
+                    [{ 'header': [1, 2, false] }],
+                    [{ 'font': [] }],
+                    [{ 'size': ['small', 'medium', 'large', 'huge'] }],
+                    [{ 'align': [] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link', 'image', 'blockquote', 'code-block'],
+                    [{ 'direction': 'rtl' }],
+                    ['undo', 'redo'] // Corrected toolbar structure
+                ],
+                handlers: {
+                    image: imageHandler
+                }
+            }
         }
     });
 
@@ -126,24 +131,54 @@
         const url = prompt('Enter the image URL');
         if (url) {
             const range = quill.getSelection();
-            quill.insertEmbed(range.index, 'image', url);
-            const image = document.querySelector(`img[src="${url}"]`);
-            if (image) {
-                image.style.height = '700px';
-                image.style.width = 'auto';
-                image.style.display = 'block';
-                image.style.marginLeft = 'auto';
-                image.style.marginRight = 'auto';
-                // Optionally add margin for spacing
-                image.style.marginTop = '20px';
-                image.style.marginBottom = '20px';
+            if (range) {
+                // Insert image at the current cursor position
+                quill.insertEmbed(range.index, 'image', url);
+
+                // Delay to ensure the image is rendered before applying styles
+                setTimeout(() => {
+                    const image = document.querySelector(`img[src="${url}"]`);
+                    if (image) {
+                        // Add custom class for styling
+                        image.classList.add('custom-image');
+                    }
+                }, 100);
+            } else {
+                alert('Please place the cursor where you want to insert the image.');
             }
         }
     }
 
-
-    // Form submit edildiğinde, Quill editöründeki HTML içeriğini gizli bir input alanına ekleyin
+    // Form submit: Set Quill content to a hidden input field
     var form = document.querySelector('form');
+    if (form) {
+        form.onsubmit = function () {
+            var content = document.querySelector('input#content');
+            if (content) {
+                content.value = quill.root.innerHTML; // Extract HTML from Quill
+            } else {
+                console.error('Input field with ID "content" not found.');
+            }
+        };
+    } else {
+        console.error('Form element not found.');
+    }
+
+    // Add CSS for consistent image styling
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .custom-image {
+            height: 700px;
+            width: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    `;
+    document.head.appendChild(style);
+
 
     form.onsubmit = function() {
         var content = document.querySelector('input#content');

@@ -98,6 +98,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index');
                 Route::delete('/contacts/{contact_id}', [ContactController::class, 'deleteContact'])->name('contacts.delete');
                 Route::post('/contacts/reply/{id}', [ContactController::class, 'reply'])->name('contacts.reply');
+                Route::post('/contacts/replykunjungan/{id}', [ContactController::class, 'replykunjungan'])->name('contacts.replykunjungan');
             });
 
             //------- User Routes -------
