@@ -6,6 +6,7 @@
             <th>Pendidikan</th>
             <th>Subject</th>
             <th>Message</th>
+            <th>Status</th>
             <th>Create Date</th>
             <th>Options</th>
         </tr>
@@ -17,6 +18,7 @@
             <th>Pendidikan</th>
             <th>Subject</th>
             <th>Message</th>
+            <th>Status</th>
             <th>Create Date</th>
             <th>Options</th>
         </tr>
@@ -31,6 +33,7 @@
                 <td>
                     {{ Str::words($contact->message, 10, '...') }}
                 </td>
+                <td>{{ $contact->status }}</td>
                 <td>{{ $contact->created_at }}</td>
                 <td>
                     <div class="d-flex justify-content-around">

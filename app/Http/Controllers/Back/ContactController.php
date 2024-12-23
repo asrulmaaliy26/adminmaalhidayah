@@ -40,6 +40,14 @@ class ContactController extends Controller
             $contact->status = $balasan[1] ?? 'Tidak ada balasan';
         }
 
+        // Memproses data message untuk setiap kunjungan
+        foreach ($contacts as $contact) {
+            
+            preg_match('/--- Balasan:\s*(.*)/', $contact->message, $balasan);
+
+            $contact->status = $balasan[1] ?? 'Tidak ada balasan';
+        }
+
         return view('back.contact.index', compact('contacts', 'kunjungan'));
     }
 

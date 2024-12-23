@@ -1,4 +1,10 @@
-
+<style>
+    table {
+    width: 100%;
+    table-layout: fixed; /* Atur lebar kolom agar tetap dalam area */
+    word-wrap: break-word; /* Pecah kata jika terlalu panjang */
+}
+</style>
 <table id="{{ $tableId }}" class="table table-striped table-bordered">
     <thead>
         <tr>
