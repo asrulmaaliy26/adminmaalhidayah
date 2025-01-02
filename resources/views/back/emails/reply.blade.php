@@ -22,7 +22,8 @@
 </head>
 <body>
     <h1>Yth. {{ $name }},</h1>
-    <p>Kami telah menerima pesan Anda mengenai {{ $subject }} dengan isi sebagai berikut:</p>
+    <p>Kami telah menerima pesan Anda dengan isi sebagai berikut:</p>
+    <p>{{ $subject }} </p>
     <blockquote>
         "{{ $originalMessage }}"
     </blockquote>
