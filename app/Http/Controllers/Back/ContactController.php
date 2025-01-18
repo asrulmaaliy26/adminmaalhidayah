@@ -22,7 +22,7 @@ class ContactController extends Controller
             $names = explode(' - ', $contact->name);
             $contact->penanggungJawab = $names[0] ?? null;
             $contact->lembaga = $names[1] ?? null;
-
+            
             // Memproses message untuk mendapatkan data terpisah
             preg_match('/nomor:\s*(\S+)/', $contact->message, $nomor);
             preg_match('/Jumlah Guru:\s*(\d+)/', $contact->message, $jumlahGuru);
@@ -42,7 +42,7 @@ class ContactController extends Controller
 
         // Memproses data message untuk setiap kunjungan
         foreach ($contacts as $contact) {
-
+            
             preg_match('/--- Balasan:\s*(.*)/', $contact->message, $balasan);
 
             $contact->status = $balasan[1] ?? 'Tidak ada balasan';
@@ -104,16 +104,18 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Balasan berhasil dikirim ke ' . $message->email);
     }
 
-    public function replykunjungan($id)
+    public function replykunjungan(Request $request, $id)
     {
         // Mencari pesan berdasarkan ID
         $message = Contact::findOrFail($id);
 
-        // Menentukan balasan otomatis
-        $replykunjungan = "baik silahkan";
+        // Validasi input balasan
+        $request->validate([
+            'replykunjungan' => 'required',
+        ]);
 
         // Mengirim email balasan ke pengirim pesan
-        Mail::to($message->email)->send(new ReplyKunjungan($message, $replykunjungan));
+        Mail::to($message->email)->send(new ReplyKunjungan($message, $request->replykunjungan));
 
         // Menghapus semua balasan lama dari pesan
         $originalMessage = preg_replace('/\n*\s*--- Balasan:.*/s', '', $message->message);
@@ -125,12 +127,12 @@ class ContactController extends Controller
         }
 
         // Menambahkan balasan baru setelah pesan asli
-        $message->message = $originalMessage . "\n--- Balasan:\n" . $replykunjungan;
+        $message->message = $originalMessage . "\n--- Balasan:\n" . $request->replykunjungan;
 
         // Menyimpan perubahan pada message
         $message->save();
 
         // Redirect kembali dengan notifikasi berhasil
-        return redirect()->back()->with('success', 'Balasan otomatis berhasil dikirim ke ' . $message->email);
+        return redirect()->back()->with('success', 'Balasan berhasil dikirim ke ' . $message->email);
     }
 }
