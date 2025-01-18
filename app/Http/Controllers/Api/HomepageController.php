@@ -13,6 +13,7 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Mail\ReplyKunjungan;
 
 class HomepageController extends Controller
 {
@@ -226,6 +227,18 @@ class HomepageController extends Controller
         $contact->message = $request->message;
         $contact->save();
 
+        if ($request->subject === 'kunjunganwali') {
+            $replyMessage = $request->input('replykunjungan', 'Terima kasih atas kunjungan Anda.');
+            Mail::to($contact->email)->send(new ReplyKunjungan($contact, $replyMessage));
+        
+            $originalMessage = preg_replace('/\n*\s*--- Balasan:.*/s', '', $contact->message);
+            if (substr($originalMessage, -1) !== "\n") {
+                $originalMessage .= "\n";
+            }
+            $contact->message = $originalMessage . "\n--- Balasan:\n" . $replyMessage;
+            $contact->save();
+        }
+        
         return response()->json($request->all());
     }
 }
