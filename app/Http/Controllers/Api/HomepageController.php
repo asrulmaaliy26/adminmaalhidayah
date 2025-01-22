@@ -9,6 +9,7 @@ use App\Models\Jenis;
 use App\Models\Pendidikan;
 use App\Models\Tingkat;
 use App\Models\Page;
+use App\Mail\ReplyMessage;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -217,6 +218,24 @@ class HomepageController extends Controller
             'subject' => 'required|not_in:notSelected',
             'message' => 'required'
         ]);
+
+        if ($request->pendidikan === 'kunjunganwali') {
+            // Membuat objek Contact dari request untuk dikirim ke ReplyKunjungan
+            $contact = new Contact();
+            $contact->name = $request->name;
+            $contact->email = $request->email;
+            $contact->pendidikan = $request->pendidikan;
+            $contact->subject = $request->subject;
+            $contact->message = $request->message;
+            $contact->save(); // Simpan data agar mendapatkan ID dan digunakan untuk ReplyKunjungan
+
+            // Kirim balasan langsung ke pengirim dengan pesan "Baik, silahkan"
+            Mail::to($contact->email)->send(new ReplyMessage($contact, "Baik, silahkan"));
+
+            return response()->json([
+                'success' => 'Balasan "Baik, silahkan" berhasil dikirim ke ' . $contact->email,
+            ]);
+        }
 
         $contact = new Contact();
         $contact->name = $request->name;
