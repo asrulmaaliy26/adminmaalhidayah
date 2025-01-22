@@ -14,7 +14,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::all();
+        $contacts = Contact::orderBy('created_at', 'desc')->get();
         $kunjungan = Contact::where('pendidikan', 'kunjungan')->get();
 
         // Memproses data message untuk setiap kunjungan
